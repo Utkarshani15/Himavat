@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Himavat — Rich in Tradition, Pure in Taste</title>
+  <link rel="preload" as="image" href="home1.png">
+  <link rel="preload" as="image" href="tea_hero.jpg">
+  <link rel="preload" as="image" href="oil_hero.jpg">
+  <link rel="preload" as="image" href="dryfruits_hero.jpg">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      --bg: #f1ffee;
+      --accent: #c49a6c;
+      --deep: #173d2f;
+      --muted: #6b6b6b;
+    }
+    /* ---- YOUR FULL CSS GOES HERE ---- */
+    html,
+    body {
+      height: 100%;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: #0b3717;
+      scroll-behavior: smooth;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #f1ffee;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 6px 18px #516d39;
+      border-bottom: 3px solid #074e1a;
+      padding: 0.3rem 1rem;
+      position: static;
+      width: 100%;
+      z-index: 100;
+      height: 90px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: flex-start;
+      margin-left: -28px;
+      padding: 0;
+    }
+
+    .navbar-brand img {
+      height: 110px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      margin-top: 10px;
+      margin-left: -10px;
+    }
+
+    .collapse.navbar-collapse.justify-content-end {
+      margin-right: 15px;
+      display: flex;
+      justify-content: flex-end;
+      flex-grow: 1;
+      align-items: center;
+    }
+
+    .navbar-nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .navbar-nav .nav-link {
+      color: #074e1a !important;
+      font-weight: 600;
+      font-size: 1rem;
+      white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #3a7d2f;
+    }
+   .hero {
+      position: relative;
+      height: 85vh;
+      width: 100%;
+      overflow: hidden;
+      background-color: var(--bg);
+    }
+    .slides-container {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      background-color: var(--bg);
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .slide.show {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+
+ .hero .overlay {
+  position: absolute;
+  top: 50%;
+  left: 5%; /* position left at 5% from edge */
+  transform: translateY(-50%) !important; /* vertical center only */
+  max-width: 40%; /* narrower column */
+  padding: 0 1rem;
+  color: #fff;
+  text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+}
+.overlay.show {
+  opacity: 1;
+}
+.overlay h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.15;
+}
+.overlay p {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+/* Navigation Arrows */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+      background: rgba(0,0,0,0.4);
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      padding: 8px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 4;
+      transition: background 0.3s ease;
+    }
+    .arrow:hover {
+      background: rgba(0,0,0,0.7);
+    }
+    .arrow.left {
+      left: 20px;
+    }
+    .arrow.right {
+      right: 20px;
+    }
+/* CATEGORY CARDS */
+.category-card {
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.image-wrapper {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.category-card .card-body {
+  padding: 1rem;
+  text-align: center;
+}
+
+.category-card .card-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  color: #0b3717;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.category-card .card-text {
+  font-size: 0.95rem;
+  color: #0b3717;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+}
+
+.category-card .btn {
+  border-color: #0b3717;
+  color: #0b3717;
+  transition: all 0.3s ease;
+}
+
+.category-card .btn:hover {
+  background-color: #0b3717;
+  color: #fff;
+}
+
+/* WHY CHOOSE US */
+.why-section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin: 0;
+}
+
+.why-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 10px 0;
+  margin: 0;
+}
+
+.why-card {
+  background-color: #73a365;
+  border-radius: 20px;
+  color: #fff;
+  width: 300px;
+  height: 420px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.why-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.why-card img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.why-text h5 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  margin-bottom: 0.6rem;
+  color: #fff;
+}
+
+.why-text p {
+  font-size: 0.95rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.read-more {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  align-self: flex-end;
+  transition: opacity 0.3s ease;
+}
+
+.read-more:hover {
+  opacity: 0.8;
+}
+
+/* BLOG CARDS */
+.blog-card {
+  border-radius: 20px;
+  overflow: hidden;
+  border: none;
+  background: #73a365;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.blog-image-wrapper {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.blog-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: block;
+}
+
+.card-body {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.blog-title {
+  font-family: "Playfair Display", serif;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-text {
+  color: #f3f3f3;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
+/* TESTIMONIALS */
+#testimonials {
+  background-color: var(--bg);
+  padding-top: 60px;
+  padding-bottom: 60px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.testimonial-card {
+  background-color: #73a365;
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+  text-align: center;
+  position: relative;
+}
+
+.testimonial-card .quote {
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  color: rgba(255,255,255,0.95);
+}
+
+.testimonial-card .author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+}
+
+.testimonial-card .avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.9);
+}
+
+.testimonial-card .name {
+  font-weight: 700;
+  color: #f1ffee;
+}
+
+.testimonial-card .role {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(234,246,228,0.9);
+}
+
+/* FOOTER */
+footer {
+  background: #fff;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 2.25rem 0;
+}
+
+.social-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(23, 61, 47, 0.06);
+  color: var(--deep);
+  margin-right: 8px;
+}
+
+.section-title {
+  font-family: "Playfair Display", serif;
+  color: var(--deep);
+  font-weight: 700;
+  margin-bottom: 18px;
+  letter-spacing: 0.2px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .why-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 0 50px;
+    border-radius: 0 0 28px 28px;
+  }
+
+  .category-card img {
+    height: 140px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand" href="#"><img src="logo.png" alt="Himavat Logo"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars" style="color:#074E1A"></i></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+      </ul>   
+    </div>
+  </div>
+</nav>
+
+<!-- HERO, Products, Why, Blogs, Testimonials, Footer sections -->
+<!-- HERO SLIDESHOW -->
+<section class="hero">
+  <div class="slides-container">
+    <div class="slide show" data-title="A World of Spices Awaits" data-text="From the heart of nature, discover purity and passion in every grain.">
+      <img src="home1.jpeg" alt="Spices" loading="lazy" />
+    </div>
+    <div class="slide" data-title="Serenity in Every Sip" data-text="From misty hills to your cup — discover teas crafted with care and purity.">
+      <img src="tea_hero.jpeg" alt="Tea" loading="lazy" />
+    </div>
+    <div class="slide" data-title="Nature's Golden Elixir" data-text="Cold-pressed oils that enrich your meals with purity, flavor, and wellness.">
+      <img src="oil_hero.jpeg" alt="Oil" loading="lazy" />
+    </div>
+    <div class="slide" data-title="Wholesome Goodness in Every Bite" data-text="Premium dry fruits — naturally nutritious, carefully handpicked, and packed with energy.">
+      <img src="dryfruits_hero.jpeg" alt="Dry Fruits" loading="lazy" />
+    </div>
+  </div>
+
+  <div class="overlay" aria-live="polite">
+    <h1 id="hero-title">A World of Spices Awaits</h1>
+    <p id="hero-text">From the heart of nature, discover purity and passion in every grain.</p>
+  </div>
+
+  <button class="arrow left" id="prev">&#10094;</button>
+  <button class="arrow right" id="next">&#10095;</button>
+</section>
+
+
+  <!-- Page Content with Light Green Background -->
+  <div class="page-bg">
+  <!-- Products -->
+<section id="products" class="py-5">
+  <div class="container text-center">
+    <h3 class="section-title">Product Categories</h3>
+    <p class="muted mb-4">Explore the products you need — quality that speaks for itself.</p>
+
+    <div class="row justify-content-center g-4">
+      <!-- Spices -->
+      <div class="col-md-3 col-sm-6">
+        <div class="card category-card h-100 shadow-sm" style="background-color:#f0b798;">
+          <div class="image-wrapper">
+            <img src="spices.jpeg" class="img-fluid" alt="Spices">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Spices</h5>
+            <p class="card-text">Aromatic whole and ground spices that bring warmth to every dish.</p>
+            <a href="spices.html" class="btn btn-sm btn-outline-dark">Explore Spices</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tea -->
+      <div class="col-md-3 col-sm-6">
+        <div class="card category-card h-100 shadow-sm" style="background-color:#C6E2A3;">
+          <div class="image-wrapper">
+            <img src="new.jpg" class="img-fluid" alt="Tea">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Tea</h5>
+            <p class="card-text">Single-origin and blended teas crafted for serenity and depth.</p>
+            <a href="tea.html" class="btn btn-sm btn-outline-dark">Explore Tea</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dry Fruits -->
+      <div class="col-md-3 col-sm-6">
+        <div class="card category-card h-100 shadow-sm" style="background-color:#eec2c2;">
+          <div class="image-wrapper">
+            <img src="dryfruits.jpeg" class="img-fluid" alt="Dry Fruits">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Dry Fruits</h5>
+            <p class="card-text">Premium dry fruits selected for freshness and flavor.</p>
+            <a href="dryfruits.html" class="btn btn-sm btn-outline-dark">Explore Dry Fruits</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Oil -->
+      <div class="col-md-3 col-sm-6">
+        <div class="card category-card h-100 shadow-sm" style="background-color:#FFE599;">
+          <div class="image-wrapper">
+            <img src="oil.jpeg" class="img-fluid" alt="Oil">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Oil</h5>
+            <p class="card-text">Pure cold-pressed oils that enhance your recipes naturally.</p>
+            <a href="oil.html" class="btn btn-sm btn-outline-dark">Explore Oil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Why Choose Us -->
+<section id="why" class="py-5 why-section">
+  <div class="container text-center">
+    <h3 class="section-title mb-3">Why Choose Us</h3>
+    <p class="text-muted mb-4">We bring care, heritage, and sustainability to every jar and cup.</p>
+    <div class="why-wrapper">
+      <div class="why-card">
+        <img src="tradition.jpeg" alt="Rich in Tradition">
+        <div class="why-text">
+          <h5>Rich in Tradition</h5>
+          <p>Our blends are inspired by time-honored recipes celebrating Indian tea & spice craftsmanship.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <img src="natural.jpeg" alt="Pure & Natural">
+        <div class="why-text">
+          <h5>Pure & Natural Goodness</h5>
+          <p>No artificial colors or additives — just nature's purest flavors packed with freshness.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <img src="sustainable.jpeg" alt="Sustainable">
+        <div class="why-text">
+          <h5>Sustainable & Ethical</h5>
+          <p>Responsible sourcing that supports local farmers and protects nature's balance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- BLOG PREVIEW -->
+<section id="blogs" class="py-5">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h3 class="section-title">Blogs</h3>
+      <p class="muted">Explore the recent blogs</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <!-- Blog Card 1 -->
+      <div class="col-md-6 col-lg-5">
+        <article class="card blog-card">
+          <div class="blog-image-wrapper">
+            <img src="blog1.jpeg" alt="Leaf to legacy">
+          </div>
+          <div class="card-body">
+            <h5 class="blog-title">From Leaf to Legacy: How Tradition Shapes Our Tea &amp; Spice Blends</h5>
+            <p class="blog-text">In a world of instant flavors and mass production, we believe in preserving the soul of tradition. Our blends are not just about taste.</p>
+            <a href="#" class="read-more">Read more &rarr;</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Blog Card 2 -->
+      <div class="col-md-6 col-lg-5">
+        <article class="card blog-card">
+          <div class="blog-image-wrapper">
+            <img src="blog2.jpeg" alt="Spices tell a story">
+          </div>
+          <div class="card-body">
+            <h5 class="blog-title">Spices That Tell a Story — Flavor Rooted in Tradition</h5>
+            <p class="blog-text">Every pinch of spice holds a tale — from the fertile farms where it’s grown to your kitchen where it awakens aromas of warmth and heritage.</p>
+            <a href="#" class="read-more">Read more &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Replace your old Testimonials section with this ---------- -->
+<section id="testimonials" class="py-5">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h3 class="section-title section-head">Our Happy Customers</h3>
+      <p class="muted section-sub">Check out what people say about our spices and teas.</p>
+    </div>
+
+    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <div class="testimonial-card">
+            <p class="quote">“Authentic flavors that remind me of home — truly rich and refreshing.”</p>
+
+            <div class="author">
+              <img src="customer_review.png" alt="avatar" class="avatar">
+              <div class="author-info text-start">
+                <div class="name">— A. Patel</div>
+                <div class="role">Home Cook, Jaipur</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card">
+            <p class="quote">“A beautiful balance of aroma and taste — their blends never disappoint.”</p>
+
+            <div class="author">
+              <img src="customer_review.png" alt="avatar" class="avatar">
+              <div class="author-info text-start">
+                <div class="name">— S. Rao</div>
+                <div class="role">Tea Enthusiast, Kolkata</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card">
+            <p class="quote">“Pure, natural and soulful — exactly what I wanted for gifting.”</p>
+
+            <div class="author">
+              <img src="customer_review.png" alt="avatar" class="avatar">
+              <div class="author-info text-start">
+                <div class="name">— M. Singh</div>
+                <div class="role">Culinary Blogger, Delhi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls (styled buttons) -->
+      <div class="controls">
+        <button class="btn" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" aria-label="Previous">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="btn" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" aria-label="Next">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+ <!-- Footer Divider -->
+<hr style="border: none; border-top: 1px solid rgba(0,0,0,0.15); margin: 0;">
+
+<!-- Footer Section -->
+<footer id="contact" style="position: relative; background-color:#f1ffee; overflow: hidden; padding:30px 0 15px 0;">
+
+  <!-- Background Image Layer -->
+  <div style="
+    position: absolute;
+    inset: 0;
+    background: url('bgfooter.jpeg') center/cover no-repeat;
+    opacity: 0.3;
+    z-index: 0;
+  "></div>
+
+  <!-- Content Layer -->
+  <div class="container position-relative" style="z-index: 1;">
+    <div class="row align-items-start text-center text-md-start gy-3">
+
+      <!-- Left: Social Media & About -->
+      <div class="col-md-4 d-flex flex-column align-items-center align-items-md-start">
+        <h5 style="font-family:'Playfair Display', serif; color:#3c5e2c; margin-bottom:6px;">Himavat</h5>
+        <p class="text-muted mb-2" style="font-size:14px; line-height:1.4;">
+          Bringing you the best of nature and tradition — from leaf to legacy.
+        </p>
+        <div>
+          <a class="social-icon me-2" href="https://www.instagram.com/himavat_tea/"><i class="fab fa-instagram"></i></a>
+          <a class="social-icon me-2" href="https://www.facebook.com/himavat.official/"><i class="fab fa-facebook-f"></i></a>
+          <a class="social-icon" href="https://x.com/himavat_spices"><i class="fab fa-x-twitter"></i></a>
+        </div>
+      </div>
+
+      <!-- Center: Contact Info -->
+      <div class="col-md-4 text-center">
+        <h6 style="font-weight:600; color:#3c5e2c; margin-bottom:6px;">Contact</h6>
+        <p class="text-muted mb-1" style="font-size:14px;">
+          Decon Products Pvt. Ltd., Udyog Vihar Phase IV, Gurugram
+        </p>
+        <a href="mailto:info@himavat.in" style="color:inherit; font-size:14px;">info@himavat.in</a>
+      </div>
+
+      <!-- Right: Viewer Guides -->
+      <div class="col-md-4">
+        <div class="d-flex flex-column align-items-center align-items-md-end text-center text-md-end">
+          <h6 style="font-weight:600; color:#3c5e2c; margin-bottom:6px;">Viewer Guides</h6>
+          <a class="text-decoration-none text-muted mb-1" href="#">Home</a>
+          <a class="text-decoration-none text-muted mb-1" href="#products">Products</a>
+          <a class="text-decoration-none text-muted" href="#contact">Contact us</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Inner Divider -->
+    <hr class="my-3" style="border-color:rgba(0,0,0,0.1); margin:10px 0;" />
+
+    <!-- Copyright -->
+    <div class="text-center text-muted" style="font-size:13px;">
+      © <span id="year"></span> Himavat — All rights reserved.
+    </div>
+  </div>
+</footer>
+<!-- Bootstrap & Footer Year Script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const slides = document.querySelectorAll(".slide");
+  const overlay = document.querySelector(".overlay");
+  const title = document.getElementById("hero-title");
+  const text = document.getElementById("hero-text");
+  const next = document.getElementById("next");
+  const prev = document.getElementById("prev");
+
+  let index = 0;
+  const waitTime = 4500; // 4.5 seconds per slide
+  let slideshowInterval;
+
+  function showSlide(newIndex) {
+    newIndex = (newIndex + slides.length) % slides.length;
+    slides[index].classList.remove("show");
+    slides[newIndex].classList.add("show");
+
+    overlay.classList.remove("show");
+    setTimeout(() => {
+      title.textContent = slides[newIndex].dataset.title;
+      text.textContent = slides[newIndex].dataset.text;
+      overlay.classList.add("show");
+    }, 400);
+
+    index = newIndex;
+  }
+
+  function startSlideshow() {
+    slideshowInterval = setInterval(() => {
+      showSlide(index + 1);
+    }, waitTime);
+  }
+
+  next.addEventListener("click", () => {
+    clearInterval(slideshowInterval);
+    showSlide(index + 1);
+    startSlideshow();
+  });
+
+  prev.addEventListener("click", () => {
+    clearInterval(slideshowInterval);
+    showSlide(index - 1);
+    startSlideshow();
+  });
+
+  // Wait for images to load or start directly if cached
+  const images = document.querySelectorAll(".slide img");
+  let loadedCount = 0;
+  function checkLoaded() {
+    loadedCount++;
+    if (loadedCount === images.length) {
+      showSlide(0);
+      startSlideshow();
+    }
+  }
+  images.forEach(img => {
+    if (img.complete) checkLoaded();
+    else img.addEventListener("load", checkLoaded);
+  });
+});
+
+</script>
+</body>
+</html>
