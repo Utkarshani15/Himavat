@@ -4,10 +4,56 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Himavat — Rich in Tradition, Pure in Taste</title>
-  <link rel="preload" as="image" href="home1.jpeg">
-  <link rel="preload" as="image" href="tea_hero.jpeg">
-  <link rel="preload" as="image" href="oil_hero.jpeg">
-  <link rel="preload" as="image" href="dryfruits_hero.jpeg">
+  <link rel="preload" as="image" href="images/home1.jpeg">
+  
+  
+  <!-- Preloader CSS -->
+  <style>
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    #preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 3px solid #c49a6c;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    .loader::after {
+      content: '';  
+      box-sizing: border-box;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-bottom-color: #173d2f;
+    }
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +63,9 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+
 
   <style>
     :root {
@@ -60,7 +109,7 @@
     }
 
     .navbar-brand img {
-      height: 110px;
+      height: 170px;
       width: auto;
       object-fit: contain;
       display: block;
@@ -114,18 +163,62 @@
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transform: scale(1.002);
+      transition: opacity 0.4s ease-out, transform 0.6s ease-out;
       pointer-events: none;
+      will-change: opacity, transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform-style: preserve-3d;
     }
     .hero-slide.is-active {
       opacity: 1;
+      transform: scale(1);
       pointer-events: auto;
+      transition: opacity 0.4s ease-out, transform 0.6s ease-out;
     }
     .hero-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+
+    /* Enhance: subtle Ken Burns on active slides */
+    .hero-slide.is-active img.animate {
+      animation: hero-kenburns 4.5s ease-in-out both;
+    }
+
+    @keyframes hero-kenburns {
+      0% { transform: scale(1.06); }
+      100% { transform: scale(1.0); }
+    }
+
+
+    /* Text animation for overlay */
+    @keyframes text-fade-up {
+      from { 
+        opacity: 0; 
+        transform: translateY(8px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+    .overlay .title-anim { 
+      animation: text-fade-up 300ms ease-out both;
+      will-change: transform, opacity;
+    }
+    .overlay .text-anim { 
+      animation: text-fade-up 350ms ease-out 50ms both;
+      will-change: transform, opacity;
     }
 
 
@@ -139,9 +232,10 @@
   color: #fff;
   text-shadow: 1px 1px 8px rgba(0,0,0,0.7);
   z-index: 3;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  opacity: 1;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+  will-change: transform, opacity;
 }
 .overlay.show {
   opacity: 1;
@@ -190,7 +284,7 @@
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
-  flex-direction: column;
+  
   justify-content: space-between;
   height: 100%;
 }
@@ -492,30 +586,140 @@ footer {
     gap: 20px;
   }
 }
+@media (max-width: 576px) {
+  
 
-@media (max-width: 768px) {
-  .hero {
-    padding: 60px 0 50px;
-    border-radius: 0 0 28px 28px;
+  .category-card {
+    border-radius: 14px;
+   
+    height: 100px;
+    margin-bottom: 0 !important;
   }
 
-  .category-card img {
-    height: 140px;
+  .image-wrapper {
+    height: 120px !important;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .image-wrapper img {
+    height: 120px !important;
+    border-radius: 14px 14px 0 0;
+    object-fit: cover;
+  }
+
+  .category-card .card-title {
+    font-size: 1rem !important;
+  }
+
+  .category-card .card-text {
+    font-size: 0.91rem !important;
+    margin-bottom: 0.7rem;
   }
 }
+
+@media (max-width: 576px) {
+  .image-wrapper {
+    height: 135px !important;
+  }
+  .image-wrapper img {
+    height: 135px !important;
+    object-fit: cover;
+    border-radius: 14px 14px 0 0;
+  }
+  .category-card {
+    margin-bottom: 14px !important;
+  }
+}
+@media (max-width: 576px) {
+  .overlay h1 {
+    font-size: 1.7rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.7rem !important;
+  }
+  .overlay p {
+    font-size: 0.95rem !important;
+    line-height: 1.38 !important;
+  }
+  .hero .overlay {
+    max-width: 90vw;
+    padding: 0 0.5rem;
+  }
+}
+@media (max-width: 576px)
+{
+  .arrow {
+    font-size: 0.9rem !important;
+    padding: 3px 6px !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .mobile-navlinks {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  position: absolute;
+  right: 15px;    /* Aligns the nav links to the right corner */
+  top: 50px;
+  z-index: 1020;
+}
+
+
+  .mobile-navlinks a {
+    font-size: 0.8rem;       /* Smaller text */
+    font-weight: 600;
+    color: #074e1a;
+    text-decoration: none;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .mobile-navlinks a:hover,
+  .mobile-navlinks a:focus {
+    background: #e8f9dc;
+    color: #157f3f;
+  }
+}
+@media (min-width: 992px) {
+  .mobile-navlinks { display: none !important; }
+}
+.first-hero {
+    opacity: 1!important;
+    transition: opacity 0.8s ease-out;
+}
+.first-hero.loaded {
+    opacity: 1;
+}
+.hero {
+  background:#f1ffee;   /* only background color */
+}
+
+.hero.loaded-bg {
+  filter: blur(0);
+}
+
+
+
 
 
   </style>
 </head>
 <body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <span class="loader"></span>
+  </div>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="logo.png" alt="Himavat Logo"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars" style="color:#074E1A"></i></span>
-    </button>
+    <a class="navbar-brand" href="#"><img src="images/logo.png" alt="Himavat Logo"></a>
+    
+    <div class="mobile-navlinks d-lg-none">
+  <a href="index.html">Home</a>
+  <a href="#products">Products</a>
+  <a href="contact.html">Contact</a>
+    </div>
     <div class="collapse navbar-collapse justify-content-end" id="mainNav">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -528,22 +732,30 @@ footer {
   </div>
 </nav>
 
+
+
 <!-- HERO, Products, Why, Blogs, Testimonials, Footer sections -->
 <!-- HERO SLIDESHOW -->
 <section class="hero">
   <div class="slides-container">
     <div class="hero-slide is-active" data-title="A World of Spices Awaits" data-text="From the heart of nature, discover purity and passion in every grain.">
-      <img src="home1.jpeg" alt="Spices" loading="lazy" />
+     <img src="images/home1.webp" alt="Spices" class="first-hero" loading="eager" fetchpriority="high">
+
+
     </div>
+    <div class="hero-slide" data-title="Crispy Makhana Goodness" data-text="Light, crunchy makhana — a wholesome snack rich in tradition and perfect for mindful eating.">
+    <img src="images/makhana_hero.webp" alt="Makhana Chaat" loading="lazy" />
+   </div>
     <div class="hero-slide" data-title="Serenity in Every Sip" data-text="From misty hills to your cup — discover teas crafted with care and purity.">
-      <img src="tea_hero.jpeg" alt="Tea" loading="lazy" />
+      <img src="images/tea_hero.webp" alt="Tea" loading="lazy" />
     </div>
     <div class="hero-slide" data-title="Nature's Golden Elixir" data-text="Cold-pressed oils that enrich your meals with purity, flavor, and wellness.">
-      <img src="oil_hero.jpeg" alt="Oil" loading="lazy" />
+      <img src="images/oil_hero.webp" alt="Oil" loading="lazy" />
     </div>
     <div class="hero-slide" data-title="Wholesome Goodness in Every Bite" data-text="Premium dry fruits — naturally nutritious, carefully handpicked, and packed with energy.">
-      <img src="dryfruits_hero.jpeg" alt="Dry Fruits" loading="lazy" />
+      <img src="images/dryfruits_hero.webp" alt="Dry Fruits" loading="lazy" />
     </div>
+    
   </div>
 
   <div class="overlay" aria-live="polite">
@@ -564,12 +776,13 @@ footer {
     <h3 class="section-title">Product Categories</h3>
     <p class="muted mb-4">Explore the products you need — quality that speaks for itself.</p>
 
-    <div class="row justify-content-center g-4">
+    <div class="row gx-2 gy-4 justify-content-center">
       <!-- Spices -->
-      <div class="col-md-3 col-sm-6">
+      <div class="col-6 col-md-3">
+
         <div class="card category-card h-100 shadow-sm" style="background-color:#f0b798;">
           <div class="image-wrapper">
-            <img src="spices.jpeg" class="img-fluid" alt="Spices">
+            <img src="images/spices.jpeg" class="img-fluid" alt="Spices">
           </div>
           <div class="card-body">
             <h5 class="card-title">Spices</h5>
@@ -580,10 +793,10 @@ footer {
       </div>
 
       <!-- Tea -->
-      <div class="col-md-3 col-sm-6">
+      <div class="col-6 col-md-3">
         <div class="card category-card h-100 shadow-sm" style="background-color:#C6E2A3;">
           <div class="image-wrapper">
-            <img src="new.jpg" class="img-fluid" alt="Tea">
+            <img src="images/tea1.jpeg" class="img-fluid" alt="Tea">
           </div>
           <div class="card-body">
             <h5 class="card-title">Tea</h5>
@@ -594,10 +807,10 @@ footer {
       </div>
 
       <!-- Dry Fruits -->
-      <div class="col-md-3 col-sm-6">
+      <div class="col-6 col-md-3">
         <div class="card category-card h-100 shadow-sm" style="background-color:#eec2c2;">
           <div class="image-wrapper">
-            <img src="dryfruits.jpeg" class="img-fluid" alt="Dry Fruits">
+            <img src="images/dryfruits.jpeg" class="img-fluid" alt="Dry Fruits">
           </div>
           <div class="card-body">
             <h5 class="card-title">Dry Fruits</h5>
@@ -608,10 +821,10 @@ footer {
       </div>
 
       <!-- Oil -->
-      <div class="col-md-3 col-sm-6">
+      <div class="col-6 col-md-3">
         <div class="card category-card h-100 shadow-sm" style="background-color:#FFE599;">
           <div class="image-wrapper">
-            <img src="oil.jpeg" class="img-fluid" alt="Oil">
+            <img src="images/oil.jpeg" class="img-fluid" alt="Oil">
           </div>
           <div class="card-body">
             <h5 class="card-title">Oil</h5>
@@ -632,21 +845,21 @@ footer {
     <p class="text-muted mb-4">We bring care, heritage, and sustainability to every jar and cup.</p>
     <div class="why-wrapper">
       <div class="why-card">
-        <img src="tradition.jpeg" alt="Rich in Tradition">
+        <img src="images/tradition.jpeg" alt="Rich in Tradition">
         <div class="why-text">
           <h5>Rich in Tradition</h5>
           <p>Our blends are inspired by time-honored recipes celebrating Indian tea & spice craftsmanship.</p>
         </div>
       </div>
       <div class="why-card">
-        <img src="natural.jpeg" alt="Pure & Natural">
+        <img src="images/natural.jpeg" alt="Pure & Natural">
         <div class="why-text">
           <h5>Pure & Natural Goodness</h5>
           <p>No artificial colors or additives — just nature's purest flavors packed with freshness.</p>
         </div>
       </div>
       <div class="why-card">
-        <img src="sustainable.jpeg" alt="Sustainable">
+        <img src="images/sustainable.jpeg" alt="Sustainable">
         <div class="why-text">
           <h5>Sustainable & Ethical</h5>
           <p>Responsible sourcing that supports local farmers and protects nature's balance.</p>
@@ -670,7 +883,7 @@ footer {
       <div class="col-md-6 col-lg-5">
         <article class="card blog-card">
           <div class="blog-image-wrapper">
-            <img src="blog1.jpeg" alt="Leaf to legacy">
+            <img src="images/blog1.jpeg" alt="Leaf to legacy">
           </div>
           <div class="card-body">
             <h5 class="blog-title">From Leaf to Legacy: How Tradition Shapes Our Tea &amp; Spice Blends</h5>
@@ -684,7 +897,7 @@ footer {
       <div class="col-md-6 col-lg-5">
         <article class="card blog-card">
           <div class="blog-image-wrapper">
-            <img src="blog2.jpeg" alt="Spices tell a story">
+            <img src="images/blog2.jpeg" alt="Spices tell a story">
           </div>
           <div class="card-body">
             <h5 class="blog-title">Spices That Tell a Story — Flavor Rooted in Tradition</h5>
@@ -713,7 +926,7 @@ footer {
             <p class="quote">“Authentic flavors that remind me of home — truly rich and refreshing.”</p>
 
             <div class="author">
-              <img src="logo.png" alt="avatar" class="avatar">
+              <img src="images/logo.png" alt="avatar" class="avatar">
               <div class="author-info text-start">
                 <div class="name">— A. Patel</div>
                 <div class="role">Home Cook, Jaipur</div>
@@ -727,7 +940,7 @@ footer {
             <p class="quote">“A beautiful balance of aroma and taste — their blends never disappoint.”</p>
 
             <div class="author">
-              <img src="logo.png" alt="avatar" class="avatar">
+              <img src="images/logo.png" alt="avatar" class="avatar">
               <div class="author-info text-start">
                 <div class="name">— S. Rao</div>
                 <div class="role">Tea Enthusiast, Kolkata</div>
@@ -741,7 +954,7 @@ footer {
             <p class="quote">“Pure, natural and soulful — exactly what I wanted for gifting.”</p>
 
             <div class="author">
-              <img src="logo.png" alt="avatar" class="avatar">
+              <img src="images/logo.png" alt="avatar" class="avatar">
               <div class="author-info text-start">
                 <div class="name">— M. Singh</div>
                 <div class="role">Culinary Blogger, Delhi</div>
@@ -776,7 +989,7 @@ footer {
   <div style="
     position: absolute;
     inset: 0;
-    background: url('bgfooter.jpeg') center/cover no-repeat;
+    background: url('images/bgfooter.jpeg') center/cover no-repeat;
     opacity: 0.3;
     z-index: 0;
   "></div>
@@ -792,7 +1005,7 @@ footer {
           Bringing you the best of nature and tradition — from leaf to legacy.
         </p>
         <div>
-          <a class="social-icon me-2" href="https://www.instagram.com/himavat_tea/"><i class="fab fa-instagram"></i></a>
+          <a class="social-icon me-2" href="https://www.instagram.com/himavat/"><i class="fab fa-instagram"></i></a>
           <a class="social-icon me-2" href="https://www.facebook.com/himavat.official/"><i class="fab fa-facebook-f"></i></a>
           <a class="social-icon" href="https://x.com/himavat_spices"><i class="fab fa-x-twitter"></i></a>
         </div>
@@ -828,13 +1041,47 @@ footer {
     </div>
   </div>
 </footer>
-<!-- Bootstrap & Footer Year Script -->
+<!-- Bootstrap & Initialization Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+  // Immediately start hiding the preloader
+  (function() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      // Start fade out immediately
+      preloader.style.transition = 'opacity 0.3s ease-out';
+      preloader.style.opacity = '0';
+      
+      // Remove preloader from DOM after animation completes
+      setTimeout(() => { preloader.style.display = 'none'; }, 100);
+
+    }
+    
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  })();
 </script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+const firstHero = document.querySelector(".first-hero");
+
+if (firstHero.complete) firstHero.classList.add("loaded");
+else firstHero.onload = () => firstHero.classList.add("loaded");
+
+const heroSection = document.querySelector(".hero");
+const firstHeroImg = document.querySelector(".first-hero");
+
+// When real image loads → remove blur + show real image smoothly
+if (firstHeroImg.complete) {
+    heroSection.classList.add("loaded-bg");
+    firstHeroImg.classList.add("loaded");
+} else {
+    firstHeroImg.onload = () => {
+        heroSection.classList.add("loaded-bg");
+        firstHeroImg.classList.add("loaded");
+    };
+}
+document.addEventListener("DOMContentLoaded", () => {
   const slides = document.querySelectorAll(".hero-slide");
   const overlay = document.querySelector(".overlay");
   const title = document.getElementById("hero-title");
@@ -844,7 +1091,7 @@ footer {
   const totalSlides = slides.length;
 
   let index = 0;
-  const waitTime = 4500; // 4.5 seconds per slide
+  const waitTime = 4500;
   let slideshowInterval;
   let isAnimating = false;
 
@@ -852,26 +1099,69 @@ footer {
     if (isAnimating) return;
     isAnimating = true;
 
-    // Normalize target index using modulo to ensure wrap-around
     newIndex = (newIndex + totalSlides) % totalSlides;
+    const currentSlide = slides[index];
+    const nextSlide = slides[newIndex];
 
-    // Hide all slides and fade out overlay
-    slides.forEach(s => s.classList.remove("is-active"));
-    overlay.style.opacity = 0;
+    // FIRST CALL or same slide: just ensure overlay + animation show
+    if (currentSlide === nextSlide) {
+      const img = nextSlide.querySelector("img");
+      if (img) {
+        img.classList.remove("animate");
+        void img.offsetWidth;    // restart animation
+        img.classList.add("animate");
+      }
 
-    // Show new slide after a brief delay
-    setTimeout(() => {
-      // Update text content
-      title.textContent = slides[newIndex].dataset.title;
-      text.textContent = slides[newIndex].dataset.text;
-      
-      // Show new slide
-      slides[newIndex].classList.add("is-active");
+      title.textContent = nextSlide.dataset.title;
+      text.textContent = nextSlide.dataset.text;
+
+      title.classList.remove("title-anim");
+      text.classList.remove("text-anim");
+      void title.offsetWidth;
+      title.classList.add("title-anim");
+      text.classList.add("text-anim");
+
       overlay.style.opacity = 1;
-      
+      isAnimating = false;
+      return;
+    }
+
+    // normal slide change - update content immediately
+    overlay.style.opacity = 0;
+    title.textContent = nextSlide.dataset.title;
+    text.textContent = nextSlide.dataset.text;
+
+    const currentImg = currentSlide.querySelector("img");
+    if (currentImg) currentImg.classList.remove("animate");
+
+    nextSlide.classList.add("is-active");
+    const nextImg = nextSlide.querySelector("img");
+    if (nextImg) {
+      nextImg.classList.remove("animate");
+      void nextImg.offsetWidth; // Force reflow
+      nextImg.classList.add("animate");
+    }
+
+    // Small delay to allow CSS transitions to start
+    requestAnimationFrame(() => {
+      title.textContent = nextSlide.dataset.title;
+      text.textContent = nextSlide.dataset.text;
+
+      title.classList.remove("title-anim");
+      text.classList.remove("text-anim");
+      void title.offsetWidth;
+      title.classList.add("title-anim");
+      text.classList.add("text-anim");
+
+      overlay.style.opacity = 1;
+    });
+
+    // Remove old slide and update state
+    setTimeout(() => {
+      currentSlide.classList.remove("is-active");
       index = newIndex;
       isAnimating = false;
-    }, 300);
+    }, 400); // Reduced from 650ms to 400ms for faster transitions
   }
 
   function startSlideshow() {
@@ -892,23 +1182,26 @@ footer {
     startSlideshow();
   });
 
-  // Wait for images to load or start directly if cached
-  const images = document.querySelectorAll(".hero-slide img");
-  let loadedCount = 0;
-  function checkLoaded() {
-    loadedCount++;
-    if (loadedCount === images.length) {
-      showSlide(0);
-      startSlideshow();
+  // Show first slide immediately
+  showSlide(0);
+  startSlideshow();
+  
+  // Fallback: Ensure preloader is hidden if still visible
+  setTimeout(() => {
+    const preloader = document.getElementById('preloader');
+    if (preloader && preloader.style.display !== 'none') {
+      preloader.classList.add('fade-out');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 300);
     }
-  }
-  images.forEach(img => {
-    if (img.complete) checkLoaded();
-    else img.addEventListener("load", checkLoaded);
-  });
-
+  }, 1000); // Fallback after 1 second
+});
+window.addEventListener("load", () => {
+    setTimeout(startSlideshow, 1000); // slideshow starts after 1sec
 });
 
 </script>
+
 </body>
 </html>
